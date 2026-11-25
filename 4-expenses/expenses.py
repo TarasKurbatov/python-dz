@@ -1,12 +1,28 @@
-expenses = [10, 40, 50, 20, 60, 80, 42]
-print(expenses)
+RUB_WORDS = {"руб", "рубль", "рубля", "рублей"}
+KOP_WORDS = {"коп", "копейка", "копейки", "копеек"}
 
-sum_expenses = sum(expenses)
+price = input("Введите сумму: ")
+price_trim = " ".join(price.lower().split())
+price_parts = price_trim.split()
 
-middle_expenses = sum_expenses/len(expenses)
+if (len(price_parts) == 4
+        and price_parts[1] in RUB_WORDS
+        and price_parts[3] in KOP_WORDS
+        and price_parts[0].isdigit()
+        and price_parts[2].isdigit()):
+    rub = int(price_parts[0])
+    kop = int(price_parts[2])
+    if 0 <= kop < 100:
+        total = rub + kop / 100
+        print(f"{total:.2f} ₽")
+    else:
+        print("Некорректный формат суммы")
 
-min_expenses = min(expenses)
-max_expenses = max(expenses)
+elif (len(price_parts) == 2
+        and price_parts[1] in RUB_WORDS
+        and price_parts[0].isdigit()):
+    rub = int(price_parts[0])
+    print(f"{rub:.2f} ₽")
 
-print_expenses = (min_expenses, max_expenses, sum_expenses)
-print(print_expenses)
+else:
+    print("Некорректный формат суммы")
